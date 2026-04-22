@@ -1,14 +1,2 @@
-export interface Player {
-  id: number;
-  name: string;
-  slug: string;
-  teamId: number;
-  position: string;
-  jerseyNumber: number;
-}
-
-export interface Team {
-  id: number;
-  name: string;
-  slug: string;
-}
+export type { Player } from './data/players';
+export type { Team } from './data/teams';

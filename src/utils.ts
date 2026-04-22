@@ -41,16 +41,32 @@ export function getPositionColorClass(position: string): string {
   return positionColors[position] ?? 'bg-gray-500/20 text-gray-300 border-gray-500/30';
 }
 
+export function getPositionColorHex(position: string): string {
+  const map: Record<string, string> = {
+    Keeper: '#facc15',
+    Bakspiller: '#f87171',
+    VenstreKant: '#34d399',
+    HoyreKant: '#60a5fa',
+    Linje: '#c084fc',
+  };
+  return map[position] ?? '#94a3b8';
+}
+
 export function getFeaturedPlayers(): Player[] {
-  // Pick a few interesting players: one from each position type
-  const seen = new Set<string>();
-  const featured: Player[] = [];
-  for (const p of players) {
-    if (!seen.has(p.position)) {
-      seen.add(p.position);
-      featured.push(p);
-    }
-    if (featured.length >= 6) break;
-  }
-  return featured;
+  // Return top 6 players by MEP score
+  return [...players]
+    .sort((a, b) => b.stats.mepScore - a.stats.mepScore)
+    .slice(0, 6);
+}
+
+export function getTopPlayersByGoals(count = 10): Player[] {
+  return [...players]
+    .sort((a, b) => b.stats.goals - a.stats.goals)
+    .slice(0, count);
+}
+
+export function getTopPlayersByMEP(count = 10): Player[] {
+  return [...players]
+    .sort((a, b) => b.stats.mepScore - a.stats.mepScore)
+    .slice(0, count);
 }
